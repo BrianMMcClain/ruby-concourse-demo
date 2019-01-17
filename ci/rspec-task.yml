@@ -1,0 +1,14 @@
+---
+platform: linux
+
+image_resource:
+    type: docker-image
+    source:
+        repository: ruby
+        tag: '2.5.3'
+
+inputs:
+- name: ruby-concourse-demo
+
+run:
+    path: ruby-concourse-demo/ci/rspec.sh

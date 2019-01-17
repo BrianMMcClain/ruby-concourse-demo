@@ -1,0 +1,14 @@
+resources:
+    - name: ruby-concourse-demo
+      type: git
+      source:
+        uri: https://github.com/BrianMMcClain/ruby-concourse-demo.git
+        branch: master
+
+jobs:
+    - name: unit-test
+      public: true
+      plan:
+      - get: ruby-concourse-demo
+      - task: rspec
+        file: ruby-concourse-demo/ci/rspec-task.yml
