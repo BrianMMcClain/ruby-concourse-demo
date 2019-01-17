@@ -5,11 +5,29 @@ resources:
         uri: https://github.com/BrianMMcClain/ruby-concourse-demo.git
         branch: master
 
+    - name: docker-build
+      type: docker-image
+      source:
+        repository: brianmmcclain/ruby-concourse-demo
+        username: {{docker-hub-username}}
+        password: {{docker-hub-password}}
+
+
+
 jobs:
     - name: unit-test
-      public: true
       plan:
       - get: ruby-concourse-demo
         trigger: true
       - task: rspec
         file: ruby-concourse-demo/ci/rspec-task.yml
+    
+    - name: build-push-docker-image
+      plan:
+      - get: ruby-concourse-demo
+        passed: [unit-test]
+        trigger: true
+      - put: docker-build
+        params:
+            build: ruby-concourse-demo
+            tag_as_latest: true
