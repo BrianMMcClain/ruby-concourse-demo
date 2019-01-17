@@ -10,5 +10,6 @@ jobs:
       public: true
       plan:
       - get: ruby-concourse-demo
+        trigger: true
       - task: rspec
         file: ruby-concourse-demo/ci/rspec-task.yml
